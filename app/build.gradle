@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
 }
 
@@ -72,6 +73,9 @@ dependencies {
     implementation 'com.google.dagger:hilt-android:2.44' // Compatible with Compose and Hilt
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0" // Compatible with Compose
     kapt "com.google.dagger:hilt-compiler:2.44"
+
+    // Coil for Compose
+    implementation 'io.coil-kt:coil-compose:2.2.0' // Compatible with Compose version
 
     //junit:junit:4.13.2
     //androidx.compose.ui:ui-test-junit4

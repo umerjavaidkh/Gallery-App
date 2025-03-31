@@ -99,5 +99,5 @@ class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
 
 const val ALL_VIDEOS_TAG_NAME = "All Videos"
 const val ALL_IMAGES_TAG_NAME = "All Images"
-const val UNKNOWN_BUCKET = " Unknown"
-const val EXTERNAL_TAG = " external"
+const val UNKNOWN_BUCKET = "Unknown"
+const val EXTERNAL_TAG = "external"

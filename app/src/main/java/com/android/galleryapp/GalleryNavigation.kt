@@ -11,7 +11,7 @@ import com.android.galleryapp.ui.DetailScreen
 fun GalleryNavHost(navController: NavHostController) {
 
     NavHost(navController, startDestination = "albumScreen") {
-        composable("albumScreen") { AlbumScreen(navController) }
+        composable("albumScreen") { AlbumScreen() }
         composable("mediaGrid/{albumName}") { DetailScreen(navController) }
     }
 }

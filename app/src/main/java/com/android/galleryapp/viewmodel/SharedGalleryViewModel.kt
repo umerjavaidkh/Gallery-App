@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SharedGalleryViewModel @Inject constructor(
-    private val repository: GalleryRepository,
+    private val repository: GalleryRepository
 ) : ViewModel()  {
 
     private val _albumsFlow = MutableStateFlow<List<Album>>(emptyList()) // StateFlow for UI
@@ -26,5 +26,13 @@ class SharedGalleryViewModel @Inject constructor(
                     _albumsFlow.value = album
                 }
         }
+    }
+
+    fun openDetailScreen(album: Album){
+
+    }
+
+    fun showErrorOrMessage(text: String){
+
     }
 }
