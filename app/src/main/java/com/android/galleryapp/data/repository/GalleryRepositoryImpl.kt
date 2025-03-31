@@ -72,7 +72,6 @@ class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
             } // End of cursor loop
         }// End of cursor use
 
-
         // Add "All Images" and "All Videos" albums at the top
         val albumList = mutableListOf<Album>()
         if (allImages.isNotEmpty()) albumList.add(Album(ALL_IMAGES_TAG_NAME,geThumbnail(allImages.first()), allImages))
