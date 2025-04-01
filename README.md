@@ -6,9 +6,12 @@ The **Gallery App** is an Android application designed to efficiently display im
 ## Prerequisites
 Before running the project or executing test cases, ensure you have the following installed:
 
-- **Android Studio** (Latest version recommended)
+- **Android Studio** <img width="495" alt="image" src="https://github.com/user-attachments/assets/cc6e5c26-923a-4413-8c3b-cc8747ee847f" />
+
 - **Java 17+**
-- **Gradle** (Bundled with Android Studio)
+- **Gradle** (Bundled with Android Studio) <img width="632" alt="image" src="https://github.com/user-attachments/assets/be51252f-7129-4bbd-943d-424a7dadedca" />
+<img width="632" alt="image" src="https://github.com/user-attachments/assets/039165cb-6c19-4e8b-8f7e-18c3f04e0a7f" />
+
 - **Android Emulator or Physical Device**
 
 ## Running the App
