@@ -42,8 +42,8 @@ class SharedGalleryViewModelTest {
     fun fetchAlbumsShouldUpdateAlbumsFlowWithAlbumData() = runTest {
         // given
         val mockAlbums = listOf(
-            Album("Album1", Uri.parse("/path/file1"), listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", "/path/file1", MediaType.IMAGE))),
-            Album("Album2", Uri.parse("/path/file2"), listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", "/path/file2", MediaType.VIDEO)))
+            Album("Album1", listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", MediaType.IMAGE))),
+            Album("Album2", listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", MediaType.VIDEO)))
         )
         mockkStatic(Uri::class)
         every { Uri.parse(any()) } returns mockk(relaxed = true)
@@ -75,8 +75,8 @@ class SharedGalleryViewModelTest {
     @Test
     fun getMediaFilesForAlbumShouldReturnCorrectMediaFiles() {
         // given
-        val album1 = Album("Album1",Uri.parse("/path/file1"), listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", "/path/file1", MediaType.IMAGE)))
-        val album2 = Album("Album2", Uri.parse("/path/file2"), listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", "/path/file2", MediaType.VIDEO)))
+        val album1 = Album("Album1", listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", MediaType.IMAGE)))
+        val album2 = Album("Album2", listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", MediaType.VIDEO)))
 
         // Set albumsFlow manually
         coEvery { repository.fetchAlbums() } returns flowOf(listOf(album1, album2))
@@ -95,7 +95,7 @@ class SharedGalleryViewModelTest {
     @Test
     fun getMediaFilesForAlbumShouldReturnNullIfAlbumNotFound() {
         // given
-        val album = Album("Album1", Uri.parse("/path/file1"), listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", "/path/file1", MediaType.IMAGE)))
+        val album = Album("Album1", listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", MediaType.IMAGE)))
 
         coEvery { repository.fetchAlbums() } returns flowOf(listOf(album))
 
@@ -109,7 +109,7 @@ class SharedGalleryViewModelTest {
     @Test
     fun openDetailScreenShouldTriggerNavigation() = runTest {
         // given
-        val album = Album("Album1", Uri.parse("/path/file1"), emptyList())
+        val album = Album("Album1", emptyList())
 
         // when
         viewModel.openDetailScreen(album)

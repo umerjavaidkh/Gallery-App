@@ -89,9 +89,6 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
     kapt "com.google.dagger:hilt-compiler:2.44"
 
-
-    //implementation 'androidx.test:rules:1.4.0'// Compatible with Compose
-
     // Coil for Compose
     implementation 'io.coil-kt:coil-compose:2.2.0' // Compatible with Compose version
 

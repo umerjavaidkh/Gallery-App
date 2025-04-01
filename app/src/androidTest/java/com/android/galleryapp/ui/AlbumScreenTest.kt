@@ -29,8 +29,8 @@ class AlbumScreenTest {
     )*/
 
     private val mockAlbums = listOf(
-        Album("Album1", Uri.parse("/path/file1"), listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", "/path/file1", MediaType.IMAGE))),
-        Album("Album2", Uri.parse("/path/file2"), listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", "/path/file2", MediaType.VIDEO)))
+        Album("Album1", listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", MediaType.IMAGE))),
+        Album("Album2", listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", MediaType.VIDEO)))
     )
     private val albumsFlowData = MutableStateFlow(mockAlbums)
 
