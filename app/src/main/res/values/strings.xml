@@ -3,4 +3,6 @@
     <string name="album_screen">Gallery Albums</string>
     <string name="detail_screen">Gallery</string>
     <string name="permission_not_granted">Permission not granted</string>
+    <string name="no_media">No Media</string>
+    <string name="no_media_message">No media found for the current album.</string>
 </resources>

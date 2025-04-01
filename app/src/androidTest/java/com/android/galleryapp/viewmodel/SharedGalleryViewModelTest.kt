@@ -1,4 +1,4 @@
-package com.android.galleryapp.data.repository.viewmodel
+package com.android.galleryapp.viewmodel
 
 import android.net.Uri
 import com.android.galleryapp.TestCoroutineRule
@@ -8,7 +8,6 @@ import com.android.galleryapp.data.model.MediaType
 import com.android.galleryapp.data.repository.GalleryRepository
 import com.android.galleryapp.navigation.Destination
 import com.android.galleryapp.navigation.Navigator
-import com.android.galleryapp.viewmodel.SharedGalleryViewModel
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf

@@ -1,33 +1,26 @@
-package com.android.galleryapp.data.repository.ui
+package com.android.galleryapp.ui
 
 import android.net.Uri
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import com.android.galleryapp.R
 import com.android.galleryapp.data.model.Album
 import com.android.galleryapp.data.model.MediaFile
 import com.android.galleryapp.data.model.MediaType
-import com.android.galleryapp.ui.AlbumScreen
 import com.android.galleryapp.viewmodel.SharedGalleryViewModel
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Rule
 import org.junit.Test
 
-class AlbumScreenTest {
+class DetailScreenTest {
 
     @get:Rule
     val composeRule = createComposeRule()
-
-   /* @get:Rule
-    val permissionRule = GrantPermissionRule.grant(
-        android.Manifest.permission.READ_EXTERNAL_STORAGE
-    )*/
 
     private val mockAlbums = listOf(
         Album("Album1", Uri.parse("/path/file1"), listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", "/path/file1", MediaType.IMAGE))),
@@ -35,44 +28,31 @@ class AlbumScreenTest {
     )
     private val albumsFlowData = MutableStateFlow(mockAlbums)
 
-    private var mockedViewModel: SharedGalleryViewModel = mockk(relaxed = true) {
+    private val mockedViewModel: SharedGalleryViewModel = mockk(relaxed = true) {
         every { albumsFlow } returns albumsFlowData
+        every { getMediaFilesForAlbum(any()) } returns mockAlbums[0].media
     }
 
     @Test
-    fun should_display_content_and_heading() {
+    fun should_display_content_and_heading()  {
         // Given
         var headingText = ""
+        val albumId = "Album1"
+        val mockedViewModel = mockedViewModel
+
         composeRule.setContent {
-            AlbumScreen(
+            DetailScreen(
+                albumId,
                 viewModel = mockedViewModel
             )
 
             // When
-            headingText = stringResource(R.string.album_screen)
+            headingText = stringResource(R.string.detail_screen)
         }
 
         // then
         composeRule.onNodeWithText(headingText).assertIsDisplayed()
-        composeRule.onNodeWithText("Album2").assertIsDisplayed()
-        composeRule.onNodeWithText("Album1").assertIsDisplayed()
-    }
-
-    @Test
-    fun should_perform_click_aciton() {
-        // Given
-        val albumName = "Album1"
-        composeRule.setContent {
-            AlbumScreen(
-                viewModel = mockedViewModel
-            )
-        }
-
-        // When
-        composeRule.onNodeWithText(albumName).performClick()
-
-        // then
-        verify { mockedViewModel.openDetailScreen(any()) }
+        composeRule.onNodeWithContentDescription("file1").assertExists()
     }
 
 }

@@ -20,7 +20,7 @@ fun MediaItem(media: MediaFile, onClick: () -> Unit) {
 
     Image(
         painter = rememberAsyncImagePainter(imagePath),
-        contentDescription = null,
+        contentDescription = media.name,
         modifier = Modifier
             .padding(4.dp)
             .size(100.dp)
