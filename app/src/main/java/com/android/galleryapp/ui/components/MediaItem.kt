@@ -3,6 +3,7 @@ package com.android.galleryapp.ui.components
 import android.content.Context
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.android.galleryapp.data.model.MediaFile
 import com.android.galleryapp.data.model.MediaType
+import com.android.galleryapp.ui.theme.SPACING_XXS
+import com.android.galleryapp.ui.theme.Yellow
 
 @Composable
 fun MediaItem(media: MediaFile, onClick: () -> Unit) {
@@ -22,8 +25,9 @@ fun MediaItem(media: MediaFile, onClick: () -> Unit) {
         painter = rememberAsyncImagePainter(imagePath),
         contentDescription = media.name,
         modifier = Modifier
-            .padding(4.dp)
-            .size(100.dp)
+            .padding(SPACING_XXS.dp)
+            .background(Yellow.v20)
+            .size(IMAGE_SIZE.dp)
             .clickable { onClick() },
         contentScale = ContentScale.Crop
     )
@@ -32,3 +36,5 @@ fun MediaItem(media: MediaFile, onClick: () -> Unit) {
 fun getMimeType(context: Context, uri: Uri): String? {
     return context.contentResolver.getType(uri)
 }
+
+private const val IMAGE_SIZE = 100

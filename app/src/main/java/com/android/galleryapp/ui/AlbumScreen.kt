@@ -18,6 +18,7 @@ import com.android.galleryapp.data.model.Album
 import com.android.galleryapp.ui.components.AlbumGridItem
 import com.android.galleryapp.ui.components.CustomTopAppBar
 import com.android.galleryapp.ui.permissions.RequestStoragePermissions
+import com.android.galleryapp.ui.theme.BrandingOrange
 import com.android.galleryapp.ui.theme.LightGrey
 import com.android.galleryapp.ui.theme.SPACING_XXS
 import com.android.galleryapp.viewmodel.SharedGalleryViewModel
@@ -49,7 +50,7 @@ fun AlbumScreen(viewModel: SharedGalleryViewModel = hiltViewModel()){
 private fun Content(albums: List<Album>, onGridItemClick: (album: Album) -> Unit) {
 
     Scaffold(
-        backgroundColor =  LightGrey.v80,
+        backgroundColor =  BrandingOrange.v60,
         topBar = { CustomTopAppBar(title = stringResource(R.string.album_screen)) },
     ) { paddingValues ->
 

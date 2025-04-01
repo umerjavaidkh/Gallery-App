@@ -1,3 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.GalleryApp" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.GalleryApp" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Set status bar color to match the theme's primary color -->
+        <item name="android:statusBarColor">@color/brand_primary</item>
+        <item name="android:background">@color/brand_primary60</item>
+        <item name="android:content">@color/brand_primary60</item>
+    </style>
 </resources>

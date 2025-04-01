@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.android.galleryapp.ui.theme.Base.White
+import com.android.galleryapp.ui.theme.BrandingOrange
+import com.android.galleryapp.ui.theme.GalleryTypography
 import com.android.galleryapp.ui.theme.Green
 
 @Composable
@@ -14,7 +17,7 @@ fun CustomTopAppBar(
     actions: @Composable RowScope.() -> Unit = {}
 ) {
     TopAppBar(
-        title = { Text(text = title) },
+        title = { Text(text = title, style = GalleryTypography.Heading.h2.copy(color = White)) },
         navigationIcon = navigationIcon?.let {
             {
                 IconButton(onClick = onNavigationClick) {
@@ -23,6 +26,6 @@ fun CustomTopAppBar(
             }
         },
         actions = actions,
-        backgroundColor = Green.v80
+        backgroundColor = BrandingOrange.v100
     )
 }

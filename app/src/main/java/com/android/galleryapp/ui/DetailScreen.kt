@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import com.android.galleryapp.R
 import com.android.galleryapp.ui.components.CustomTopAppBar
 import com.android.galleryapp.ui.components.MediaItem
 import com.android.galleryapp.ui.components.getMimeType
+import com.android.galleryapp.ui.theme.BrandingOrange
 import com.android.galleryapp.ui.theme.GalleryTypography
 import com.android.galleryapp.ui.theme.LightGrey
 import com.android.galleryapp.ui.theme.SPACING_M
@@ -33,8 +35,10 @@ fun DetailScreen(albumName: String, viewModel: SharedGalleryViewModel){
     val albumMedia = viewModel.getMediaFilesForAlbum(albumName)
 
     Scaffold(
-        backgroundColor =  LightGrey.v80,
-        topBar = { CustomTopAppBar(title = stringResource(R.string.detail_screen)) },
+        backgroundColor =  BrandingOrange.v60,
+        topBar = { CustomTopAppBar(title = stringResource(R.string.detail_screen),
+            navigationIcon = Icons.Default.ArrowBack,
+            onNavigationClick = viewModel::goBack) },
     ) { paddingValues ->
 
         if (!albumMedia.isNullOrEmpty()) {

@@ -42,6 +42,12 @@ class SharedGalleryViewModel @Inject constructor(
         }
     }
 
+    fun goBack(){
+        viewModelScope.launch {
+            navigator.navigateUp()
+        }
+    }
+
     fun showErrorOrMessage(text: String){
 
     }
