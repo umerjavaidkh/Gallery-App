@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import com.android.galleryapp.R
 import com.android.galleryapp.data.model.Album
 import com.android.galleryapp.data.model.MediaFile
@@ -13,6 +14,7 @@ import com.android.galleryapp.data.model.MediaType
 import com.android.galleryapp.viewmodel.SharedGalleryViewModel
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Rule
 import org.junit.Test
@@ -53,6 +55,28 @@ class DetailScreenTest {
         // then
         composeRule.onNodeWithText(headingText).assertIsDisplayed()
         composeRule.onNodeWithContentDescription("file1").assertExists()
+    }
+
+    @Test
+    fun should_call_go_back_form_view_model() {
+        // Given
+        val albumId = "Album1"
+        var iconContentDescription = ""
+        val mockedViewModel = mockedViewModel
+        composeRule.setContent {
+            DetailScreen(
+                albumId,
+                viewModel = mockedViewModel
+            )
+
+            iconContentDescription = stringResource(R.string.navigation_icon_dec)
+        }
+
+        // When
+        composeRule.onNodeWithContentDescription(iconContentDescription).performClick()
+
+        // then
+        verify { mockedViewModel.goBack() }
     }
 
 }

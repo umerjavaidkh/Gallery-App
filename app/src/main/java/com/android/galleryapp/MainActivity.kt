@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
         ObserveAsEvents(flow = navigator.navigationActions) { action ->
             when (action) {
                 is NavigationAction.Navigate -> {
+                    // Below portion could be handled by Navigation 3 latest in best way
                     when (action.destination.name) {
                         Destination.AlbumScreen.name -> navController.navigate(Destination.AlbumScreen.name)
                         else -> {

@@ -48,6 +48,7 @@ class SharedGalleryViewModel @Inject constructor(
         }
     }
 
+    // We can have app wise error screen or snack bar
     fun showErrorOrMessage(text: String){
 
     }
