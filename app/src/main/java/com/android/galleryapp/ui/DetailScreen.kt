@@ -24,7 +24,6 @@ import com.android.galleryapp.ui.components.MediaItem
 import com.android.galleryapp.ui.components.getMimeType
 import com.android.galleryapp.ui.theme.BrandingOrange
 import com.android.galleryapp.ui.theme.GalleryTypography
-import com.android.galleryapp.ui.theme.LightGrey
 import com.android.galleryapp.ui.theme.SPACING_M
 import com.android.galleryapp.viewmodel.SharedGalleryViewModel
 

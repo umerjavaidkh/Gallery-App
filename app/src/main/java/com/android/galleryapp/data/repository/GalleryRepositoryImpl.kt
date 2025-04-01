@@ -59,14 +59,21 @@ class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
 
                 // Add to the respective folder album
                 albums.getOrPut(folderName) { mutableListOf() }
-                    .add(MediaFile(id, uri, name, path, type))
+                    .add(
+                        if(type == MediaType.VIDEO){
+                            val thumbnail = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
+                            MediaFile(id, uri, name, type, thumbnail)
+                        }
+                        else
+                        MediaFile(id, uri, name, type)
+                    )
 
                 // Add to "All Images" or "All Videos"
                 if (type == MediaType.IMAGE) {
-                    allImages.add(MediaFile(id, uri, name, path, type))
+                    allImages.add(MediaFile(id, uri, name, type))
                 } else {
                     val thumbnail = ContentUris.withAppendedId(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id)
-                    allVideos.add(MediaFile(id, uri, name, path, type, thumbnail))
+                    allVideos.add(MediaFile(id, uri, name, type, thumbnail))
                 }
 
             } // End of cursor loop
@@ -74,11 +81,11 @@ class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
 
         // Add "All Images" and "All Videos" albums at the top
         val albumList = mutableListOf<Album>()
-        if (allImages.isNotEmpty()) albumList.add(Album(ALL_IMAGES_TAG_NAME,geThumbnail(allImages.first()), allImages))
-        if (allVideos.isNotEmpty()) albumList.add(Album(ALL_VIDEOS_TAG_NAME, geThumbnail(allVideos.first()), allVideos))
+        if (allImages.isNotEmpty()) albumList.add(Album(ALL_IMAGES_TAG_NAME, allImages))
+        if (allVideos.isNotEmpty()) albumList.add(Album(ALL_VIDEOS_TAG_NAME, allVideos))
 
         // Add all other albums
-        albumList.addAll(albums.map { Album(it.key, geThumbnail(it.value.first()), it.value) })
+        albumList.addAll(albums.map { Album(it.key, it.value) })
 
         emit(albumList)
     }
@@ -93,7 +100,6 @@ class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
 
         return ContentUris.withAppendedId(baseUri, album.id)
     }
-
 }
 
 const val ALL_VIDEOS_TAG_NAME = "All Videos"
