@@ -38,7 +38,6 @@ class DetailScreenTest {
     @Test
     fun should_display_content_and_heading()  {
         // Given
-        var headingText = ""
         val albumId = "Album1"
         val mockedViewModel = mockedViewModel
 
@@ -47,13 +46,10 @@ class DetailScreenTest {
                 albumId,
                 viewModel = mockedViewModel
             )
-
-            // When
-            headingText = stringResource(R.string.detail_screen)
         }
 
         // then
-        composeRule.onNodeWithText(headingText).assertIsDisplayed()
+        composeRule.onNodeWithText(albumId).assertIsDisplayed()
         composeRule.onNodeWithContentDescription("file1").assertExists()
     }
 

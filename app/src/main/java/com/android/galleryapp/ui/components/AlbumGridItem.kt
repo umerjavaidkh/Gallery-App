@@ -135,6 +135,7 @@ private fun mapNameToIcon(albumName: String): Int {
         albumName.lowercase().contains("whatsapp", ignoreCase = true) -> R.drawable.ic_whatsapp
         albumName.lowercase().contains("camera", ignoreCase = true) -> R.drawable.ic_camera
         albumName.lowercase().contains("video", ignoreCase = true) -> R.drawable.ic_video
+        albumName.lowercase().contains("movie", ignoreCase = true) -> R.drawable.ic_video
         else -> R.drawable.ic_picture
     }
 }

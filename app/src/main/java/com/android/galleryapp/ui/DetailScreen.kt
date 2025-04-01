@@ -35,7 +35,7 @@ fun DetailScreen(albumName: String, viewModel: SharedGalleryViewModel){
 
     Scaffold(
         backgroundColor =  BrandingOrange.v60,
-        topBar = { CustomTopAppBar(title = stringResource(R.string.detail_screen),
+        topBar = { CustomTopAppBar(title = albumName,
             navigationIcon = Icons.Default.ArrowBack,
             onNavigationClick = viewModel::goBack) },
     ) { paddingValues ->

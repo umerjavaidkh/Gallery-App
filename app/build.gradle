@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id("jacoco") // Add this
 }
 
 android {
@@ -21,6 +22,11 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -117,4 +123,37 @@ dependencies {
     testImplementation 'androidx.arch.core:core-testing:2.1.0' // For LiveData and Flow testing
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0' // For testing coroutines
 
+}
+
+tasks.register('jacocoTestReport', JacocoReport) {
+    dependsOn 'testDebugUnitTest' // Ensure tests run before generating coverage
+
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+
+    def fileFilter = [
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*Test*.*',
+            '**/databinding/**/*.*',
+            '**/android/databinding/**/*.*',
+            '**/androidx/databinding/**/*.*',
+            '**/hilt_aggregated_deps/**/*.*',
+            '**/dagger/hilt/internal/**/*.*',
+            '**/com/example/generated/**/*.*'
+    ]
+
+    def debugTree = fileTree(
+            dir: "$buildDir/tmp/kotlin-classes/debug",
+            excludes: fileFilter
+    )
+
+    sourceDirectories.setFrom(files(android.sourceSets.main.java.srcDirs))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(files("$buildDir/jacoco/testDebugUnitTest.exec"))
 }
