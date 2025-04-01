@@ -7,10 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,15 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.android.galleryapp.R
 import com.android.galleryapp.data.model.Album
 import com.android.galleryapp.data.model.MediaType
-import com.android.galleryapp.ui.theme.Charcoal
-import com.android.galleryapp.ui.theme.GalleryTypography
-import com.android.galleryapp.ui.theme.Grey
-import com.android.galleryapp.ui.theme.SPACING_S
+import com.android.galleryapp.ui.theme.*
+import com.android.galleryapp.ui.theme.Base.White
 import com.android.galleryapp.utils.getVideoThumbnail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -71,7 +67,8 @@ fun Content(album: Album, isVideo: Boolean, modifier: Modifier = Modifier, onCli
         modifier = modifier
             .aspectRatio(1f) // Square shape
             .clip(RoundedCornerShape(1.dp))
-            .background(Grey.v20).clickable { onClick() }
+            .background(Grey.v20)
+            .clickable { onClick() }
     ) {
 
         // Album Thumbnail
@@ -89,7 +86,7 @@ fun Content(album: Album, isVideo: Boolean, modifier: Modifier = Modifier, onCli
                 .background(
                     Brush.verticalGradient(
                         colors = listOf(Color.Transparent, Charcoal.v60),
-                        startY = 200f
+                        startY = START_XY
                     )
                 )
         )
@@ -101,16 +98,15 @@ fun Content(album: Album, isVideo: Boolean, modifier: Modifier = Modifier, onCli
                 .padding(SPACING_S.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Album Icon",
-                tint = Color.White,
-                modifier = Modifier.size(14.dp)
+            Image(
+                painter = painterResource(id = mapNameToIcon(album.name)),
+                contentDescription = stringResource(R.string.album_icon),
+                modifier = Modifier.size(SPACING_L.dp)
             )
-            Spacer(modifier = Modifier.width(4.dp))
+            Spacer(modifier = Modifier.width(SPACING_XS.dp))
             Text(
                 text = album.name,
-                style = GalleryTypography.Body.S
+                style = GalleryTypography.Body.S.copy(White)
             )
         }
 
@@ -118,15 +114,31 @@ fun Content(album: Album, isVideo: Boolean, modifier: Modifier = Modifier, onCli
         Box(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(8.dp)
-                .background(Color.Black.copy(alpha = 0.7f), RoundedCornerShape(12.dp))
-                .padding(horizontal = 6.dp, vertical = 2.dp)
+                .padding(SPACING_S.dp)
+                .background(
+                    BrandingOrange.v100.copy(alpha = COUNT_BG_ALPHA),
+                    RoundedCornerShape(12.dp)
+                )
+                .padding(horizontal = HORIZONTAL_PADDING.dp, vertical = SPACING_XXS.dp)
         ) {
             Text(
                 text = (album.media?.size ?: 0).toString(),
-                style = GalleryTypography.Body.M
+                style = GalleryTypography.Body.M.copy(White)
             )
         }
     }
 
 }
+
+private fun mapNameToIcon(albumName: String): Int {
+    return when {
+        albumName.lowercase().contains("whatsapp", ignoreCase = true) -> R.drawable.ic_whatsapp
+        albumName.lowercase().contains("camera", ignoreCase = true) -> R.drawable.ic_camera
+        albumName.lowercase().contains("video", ignoreCase = true) -> R.drawable.ic_video
+        else -> R.drawable.ic_picture
+    }
+}
+
+private const val COUNT_BG_ALPHA = 0.7f
+private const val HORIZONTAL_PADDING = 6
+private const val START_XY = 200f
