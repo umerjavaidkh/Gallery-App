@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,9 +20,9 @@ import com.android.galleryapp.ui.components.AlbumGridItem
 import com.android.galleryapp.ui.components.CustomTopAppBar
 import com.android.galleryapp.ui.permissions.RequestStoragePermissions
 import com.android.galleryapp.ui.theme.BrandingOrange
-import com.android.galleryapp.ui.theme.LightGrey
 import com.android.galleryapp.ui.theme.SPACING_XXS
 import com.android.galleryapp.viewmodel.SharedGalleryViewModel
+import com.android.galleryapp.viewmodel.uistate.AlbumUiState
 
 @Composable
 fun AlbumScreen(viewModel: SharedGalleryViewModel = hiltViewModel()){
@@ -39,10 +40,23 @@ fun AlbumScreen(viewModel: SharedGalleryViewModel = hiltViewModel()){
         onPermissionsDenied = onPermissionsDenied
     )
 
-    val albums by viewModel.albumsFlow.collectAsState()
+    //val albums by viewModel.albumsFlow.collectAsState()
 
-    Content(albums) { album ->
-        viewModel.openDetailScreen(album)
+    val state by viewModel.uiState.collectAsState()
+
+    when (state) {
+        is AlbumUiState.Loading -> {
+            CircularProgressIndicator()
+        }
+        is AlbumUiState.Success -> {
+            val albums = (state as AlbumUiState.Success).albums
+            Content(albums) { album ->
+                viewModel.openDetailScreen(album)
+            }
+        }
+        is AlbumUiState.Error -> {
+            EmptyMediaState()
+        }
     }
 }
 

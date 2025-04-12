@@ -60,7 +60,7 @@ fun DetailScreen(albumName: String, viewModel: SharedGalleryViewModel){
 }
 
 @Composable
-private fun EmptyMediaState() {
+fun EmptyMediaState() {
     Column(
         modifier = Modifier
             .fillMaxSize()

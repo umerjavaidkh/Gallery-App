@@ -7,6 +7,7 @@ import com.android.galleryapp.data.model.MediaFile
 import com.android.galleryapp.data.repository.GalleryRepository
 import com.android.galleryapp.navigation.Destination
 import com.android.galleryapp.navigation.Navigator
+import com.android.galleryapp.viewmodel.uistate.AlbumUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,20 +21,29 @@ class SharedGalleryViewModel @Inject constructor(
     private val navigator: Navigator
 ) : ViewModel()  {
 
-    private val _albumsFlow = MutableStateFlow<List<Album>>(emptyList()) // StateFlow for UI
-    val albumsFlow: StateFlow<List<Album>> = _albumsFlow.asStateFlow()
+    private val _uiState = MutableStateFlow<AlbumUiState>(AlbumUiState.Loading)
+    val uiState: StateFlow<AlbumUiState> = _uiState.asStateFlow()
 
     fun fetchAlbums() {
         viewModelScope.launch {
-            repository.fetchAlbums()
-                .collect { album ->
-                    _albumsFlow.value = album
-                }
+            _uiState.value = AlbumUiState.Loading
+            try {
+                repository.fetchAlbums()
+                    .collect { albums ->
+                        _uiState.value = AlbumUiState.Success(albums)
+                    }
+            }catch (e: Exception){
+                _uiState.value = AlbumUiState.Error(e.message ?: "")
+            }
         }
     }
 
-    fun getMediaFilesForAlbum(albumId: String): List<MediaFile>? {
-        return albumsFlow.value.find { it.name == albumId }?.media
+    fun getMediaFilesForAlbum(albumId: String): List<MediaFile> {
+        return (uiState.value as? AlbumUiState.Success)
+            ?.albums
+            ?.find { it.name == albumId }
+            ?.media
+            ?: emptyList()
     }
 
     fun openDetailScreen(album: Album){
