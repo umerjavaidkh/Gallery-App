@@ -8,8 +8,10 @@ import com.android.galleryapp.data.model.Album
 import com.android.galleryapp.data.model.MediaFile
 import com.android.galleryapp.data.model.MediaType
 import com.android.galleryapp.data.util.shouldExcludeFile
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.io.File
 
 class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
@@ -88,7 +90,7 @@ class GalleryRepositoryImpl(private val context: Context): GalleryRepository {
         albumList.addAll(albums.map { Album(it.key, it.value) })
 
         emit(albumList)
-    }
+    }.flowOn(Dispatchers.IO)
 
     private fun geThumbnail(album: MediaFile): Uri {
 
