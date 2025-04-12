@@ -8,6 +8,7 @@ import com.android.galleryapp.data.model.MediaType
 import com.android.galleryapp.data.repository.GalleryRepository
 import com.android.galleryapp.navigation.Destination
 import com.android.galleryapp.navigation.Navigator
+import com.android.galleryapp.viewmodel.uistate.AlbumUiState
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -62,14 +63,16 @@ class SharedGalleryViewModelTest {
         // given
         coEvery { repository.fetchAlbums() } returns flowOf(emptyList())
 
-        viewModel.fetchAlbums()
+       val viewModel = viewModel
 
         // when
-       val resultList = viewModel.albumsFlow.value
+        viewModel.fetchAlbums()
+
+        val uiState = viewModel.uiState
 
         // then
         coVerify { repository.fetchAlbums() }
-        assert(resultList.isEmpty())
+        assert((uiState.value as AlbumUiState.Success).albums.isEmpty())
     }
 
     @Test
@@ -103,7 +106,7 @@ class SharedGalleryViewModelTest {
         val mediaFiles = viewModel.getMediaFilesForAlbum("NonExistentAlbum")
 
         // then
-        assertNull(mediaFiles)
+        assert(mediaFiles.isEmpty())
     }
 
     @Test

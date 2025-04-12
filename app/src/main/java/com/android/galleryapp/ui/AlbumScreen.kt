@@ -40,8 +40,6 @@ fun AlbumScreen(viewModel: SharedGalleryViewModel = hiltViewModel()){
         onPermissionsDenied = onPermissionsDenied
     )
 
-    //val albums by viewModel.albumsFlow.collectAsState()
-
     val state by viewModel.uiState.collectAsState()
 
     when (state) {

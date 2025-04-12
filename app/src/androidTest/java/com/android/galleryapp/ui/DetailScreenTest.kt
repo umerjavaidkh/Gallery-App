@@ -12,6 +12,7 @@ import com.android.galleryapp.data.model.Album
 import com.android.galleryapp.data.model.MediaFile
 import com.android.galleryapp.data.model.MediaType
 import com.android.galleryapp.viewmodel.SharedGalleryViewModel
+import com.android.galleryapp.viewmodel.uistate.AlbumUiState
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -28,11 +29,12 @@ class DetailScreenTest {
         Album("Album1", listOf(MediaFile(1, Uri.parse("/path/file1"), "file1", MediaType.IMAGE))),
         Album("Album2", listOf(MediaFile(2, Uri.parse("/path/file2"), "file2", MediaType.VIDEO)))
     )
-    private val albumsFlowData = MutableStateFlow(mockAlbums)
 
-    private val mockedViewModel: SharedGalleryViewModel = mockk(relaxed = true) {
-        every { albumsFlow } returns albumsFlowData
-        every { getMediaFilesForAlbum(any()) } returns mockAlbums[0].media
+    private val  currentUiState = MutableStateFlow<AlbumUiState>(AlbumUiState.Success(mockAlbums))
+
+    private var mockedViewModel: SharedGalleryViewModel = mockk(relaxed = true) {
+        every { uiState } returns currentUiState
+        every { getMediaFilesForAlbum(any()) } returns mockAlbums[0].media!!
     }
 
     @Test
